@@ -13,26 +13,14 @@ function tree(rootNode) {
 }
 
 function buildTree(array) {
-  // sort array low to high
-  let sortedArray = array.sort((a, b) => a - b);
-  // Check for duplicates
-  let dupArray = [];
-  for (num in sortedArray) {
-    for (num2 in sortedArray) {
-      if (num === num2) {
-        continue;
-      } else {
-        if (sortedArray[num] === sortedArray[num2]) {
-          dupArray.push(sortedArray[num]);
-        }
-      }
-    }
-  }
-  let start = 0;
-  let end = dupArray.length - 1;
-  // After array sorts, build to be a balanced bst
+  // Sort array low to high and remove duplicates
+  let sortedArray = [...new Set(array.sort((a, b) => a - b))];
 
-  let rootNode = toBst(dupArray, start, end);
+  let start = 0;
+  let end = sortedArray.length - 1;
+
+  // After array sorts, build a balanced bst
+  let rootNode = toBst(sortedArray, start, end);
 
   // Function to build tree and return root node
   function toBst(array, start, end) {
@@ -48,6 +36,7 @@ function buildTree(array) {
     node.right = toBst(array, mid + 1, end);
     return node;
   }
+
   const prettyPrint = (node, prefix = "", isLeft = true) => {
     if (node === null) {
       return;
@@ -60,8 +49,9 @@ function buildTree(array) {
       prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
     }
   };
-  prettyPrint(rootNode)
+  prettyPrint(rootNode);
   return tree(rootNode);
 }
 
-
+const arr = [1, 5, 7, 3, 12, 70];
+buildTree(arr);
