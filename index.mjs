@@ -119,5 +119,17 @@ function deleteItem(root, key) {
   return root;
 }
 
+function find(root, key) {
+  // Base Case
+  if (root === null || root.data === key) {
+    return root;
+  }
+  if (key < root.data) {
+    return find(root.left, key);
+  } else {
+    return find(root.right, key);
+  }
+}
+
 const arr = [1, 5, 7, 3, 12, 70, 65, 2, 4, 40, 55];
 buildTree(arr);
