@@ -52,6 +52,72 @@ function buildTree(array) {
   prettyPrint(rootNode);
   return tree(rootNode);
 }
+// Function to insert new node to tree
+function insert(rootNode, node) {
+  const temp = new Node(node);
+  // If the tree is empty
+  if (rootNode === null) {
+    return temp;
+  }
+  // Find parent node to have new node as its child
+  let parent = null;
+  let curr = rootNode;
+  while (curr !== null) {
+    parent = curr;
+    if (curr.data > node) {
+      curr = curr.left;
+    } else if (curr.data < node) {
+      curr = curr.right;
+    } else {
+      return rootNode;
+    }
+  }
+  // if give node is smaller, make it left child, else make it right child
+  if (parent.data > node) {
+    parent.left = temp;
+  } else {
+    parent.right = temp;
+  }
+  return rootNode;
+}
+// Function to delete node from tree
+function deleteItem(root, key) {
+  // Base case
+  if (root === null) {
+    return root;
+  }
+  // If key is smaller than root's data, go to left subtree
+  if (key < root.data) {
+    root.left = deleteItem(root.left, key);
+  }
+  // If key is larger than root's data, go to right subtree
+  else if (key > root.data) {
+    root.right = deleteItem(root.right, key);
+  }
+  // Node to be deleted is found
+  else {
+    // Case 1: Node with only one child or no child
+    if (root.left === null) {
+      return root.right;
+    } else if (root.right === null) {
+      return root.left;
+    }
 
-const arr = [1, 5, 7, 3, 12, 70];
+    // Case 2: Node with two children
+    // Get the inorder successor (smallest in the right subtree)
+    let succ = root.right;
+    while (succ.left !== null) {
+      succ = succ.left;
+    }
+
+    // Copy the successor's data to this node
+    root.data = succ.data;
+
+    // Delete the successor
+    root.right = deleteItem(root.right, succ.data);
+  }
+  return root;
+}
+
+const arr = [1, 5, 7, 3, 12, 70, 65, 2, 4, 40, 55];
 buildTree(arr);
