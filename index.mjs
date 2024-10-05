@@ -131,5 +131,30 @@ function find(root, key) {
   }
 }
 
+function levelOrder(root, callback) {
+  if (typeof callback !== "function") {
+    throw new Error("A callback is not a function");
+  }
+  if (root === null) {
+    return;
+  }
+  const q = [];
+
+  q.push(root);
+  while (q.length > 0) {
+    let node = q.shift();
+    console.log(node.data);
+
+    // If node has a left child, push child to queue
+    if (node.left !== null) {
+      q.push(node.left);
+    }
+    // If node has a right child, push to queue
+    if (node.right !== null) {
+      q.push(node.right);
+    }
+  }
+}
+
 const arr = [1, 5, 7, 3, 12, 70, 65, 2, 4, 40, 55];
 buildTree(arr);
