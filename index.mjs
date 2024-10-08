@@ -133,7 +133,7 @@ function find(root, key) {
 
 function levelOrder(root, callback) {
   if (typeof callback !== "function") {
-    throw new Error("A callback is not a function");
+    throw new Error("Your argument is not a function");
   }
   if (root === null) {
     return;
@@ -143,7 +143,7 @@ function levelOrder(root, callback) {
   q.push(root);
   while (q.length > 0) {
     let node = q.shift();
-    console.log(node.data);
+    callback(node.data);
 
     // If node has a left child, push child to queue
     if (node.left !== null) {
@@ -153,6 +153,28 @@ function levelOrder(root, callback) {
     if (node.right !== null) {
       q.push(node.right);
     }
+  }
+}
+function preOrder(root, callback) {
+  if (typeof callback !== "function") {
+    throw new Error("Your argument is not a function");
+  }
+  if (root === null) {
+    return;
+  }
+  // Processes the current node first
+  callback(root.data);
+  // Recursively calls the left subtree
+  preOrder(root.left, callback);
+  // Recursively call the right subtree
+  preOrder(root.right, callback);
+}
+function inOrder(root, callback) {
+  if (typeof callback !== "function") {
+    throw new Error("Your argument is not a function");
+  }
+  if (root === null) {
+    return; 
   }
 }
 
