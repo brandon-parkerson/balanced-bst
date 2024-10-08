@@ -174,8 +174,14 @@ function inOrder(root, callback) {
     throw new Error("Your argument is not a function");
   }
   if (root === null) {
-    return; 
+    return;
   }
+  // Recursively call left subtree
+  inOrder(root.left, callback);
+  // Pass root to callback
+  callback(root.data);
+  // Recursively call the right subtree
+  inOrder(root.right, callback);
 }
 
 const arr = [1, 5, 7, 3, 12, 70, 65, 2, 4, 40, 55];
