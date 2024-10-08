@@ -249,7 +249,7 @@ function isBalanced(root) {
     }
     let leftHeight = checkBalance(node.left);
     if (leftHeight === -1) {
-      return false
+      return false;
     }
     let rightHeight = checkBalance(node.right);
     if (rightHeight === -1) {
@@ -264,5 +264,77 @@ function isBalanced(root) {
   return checkBalance(root) !== -1;
 }
 
-const arr = [1, 5, 7, 3, 12, 70, 65, 2, 4, 40, 55];
-buildTree(arr);
+function rebalance(root) {
+  let nodes = [];
+  if (root === null) {
+    return;
+  }
+  function traverse(root) {
+    if (root === null) {
+      return;
+    }
+    traverse(root.left);
+    nodes.push(root.data);
+    traverse(root.right);
+  }
+  return buildTree(nodes);
+}
+
+function randomNums() {
+  let numbers = [];
+  for (let i = 0; i < 11; i++) {
+    let min = 0;
+    let max = 99;
+    let randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+    numbers.push(randomNum);
+  }
+  return numbers;
+}
+
+// Driver Script
+
+let randomNumbers = randomNums();
+console.log("Random Numbers:", randomNumbers);
+
+// Create a binary search tree
+let bst = buildTree(randomNumbers);
+console.log("Initial Tree:");
+levelOrder(bst.root, (data) => console.log(data));
+
+// Check if the tree is balanced
+console.log("Is the tree balanced?", isBalanced(bst.root));
+
+// Print the tree in various orders
+console.log("Level Order:");
+levelOrder(bst.root, (data) => process.stdout.write(data + " "));
+console.log("\nPre Order:");
+preOrder(bst.root, (data) => process.stdout.write(data + " "));
+console.log("\nIn Order:");
+inOrder(bst.root, (data) => process.stdout.write(data + " "));
+console.log("\nPost Order:");
+postOrder(bst.root, (data) => process.stdout.write(data + " "));
+
+// Unbalance the tree by adding numbers > 100
+for (let i = 101; i <= 110; i++) {
+  bst.root = insert(bst.root, i); // Assuming insert function modifies the root
+}
+console.log("\nAfter adding numbers > 100:");
+levelOrder(bst.root, (data) => console.log(data));
+console.log("Is the tree balanced?", isBalanced(bst.root));
+
+// Rebalance the tree
+bst = rebalance(bst.root);
+console.log("Rebalanced Tree:");
+levelOrder(bst.root, (data) => console.log(data));
+console.log("Is the tree balanced?", isBalanced(bst.root));
+
+// Print the final tree in various orders
+console.log("Final Level Order:");
+levelOrder(bst.root, (data) => process.stdout.write(data + " "));
+console.log("\nFinal Pre Order:");
+preOrder(bst.root, (data) => process.stdout.write(data + " "));
+console.log("\nFinal In Order:");
+inOrder(bst.root, (data) => process.stdout.write(data + " "));
+console.log("\nFinal Post Order:");
+postOrder(bst.root, (data) => process.stdout.write(data + " "));
+
