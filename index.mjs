@@ -221,5 +221,48 @@ function height(node) {
   return Math.max(leftHeight, rightHeight) + 1;
 }
 
+function depth(node, root) {
+  if (root === null) {
+    return -1;
+  }
+  if (node.data === root.data) {
+    return 0;
+  }
+  let leftDepth = depth(node, root.left);
+  if (leftDepth !== -1) {
+    return 1 + leftDepth;
+  }
+  let rightDepth = depth(node, root.right);
+  if (rightDepth !== -1) {
+    return 1 + rightDepth;
+  }
+  return -1;
+}
+
+function isBalanced(root) {
+  if (root === null) {
+    return true;
+  }
+  function checkBalance(node) {
+    if (node === null) {
+      return true;
+    }
+    let leftHeight = checkBalance(node.left);
+    if (leftHeight === -1) {
+      return false
+    }
+    let rightHeight = checkBalance(node.right);
+    if (rightHeight === -1) {
+      return false;
+    }
+    let hieghtDiff = Math.abs(leftHeight - rightHeight);
+    if (hieghtDiff > 1) {
+      return false;
+    }
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
+  return checkBalance(root) !== -1;
+}
+
 const arr = [1, 5, 7, 3, 12, 70, 65, 2, 4, 40, 55];
 buildTree(arr);
