@@ -190,7 +190,7 @@ function postOrder(root, callback) {
   }
   // Base Case
   if (root === null) {
-    return
+    return;
   }
   // Recursively call left subtree
   postOrder(root.left, callback);
@@ -198,6 +198,27 @@ function postOrder(root, callback) {
   postOrder(root.right, callback);
   // Pass root to callback
   callback(root.data);
+}
+
+function height(node) {
+  // Base case
+  if (node === null) {
+    return 0;
+  }
+  // Height of left subtree
+  let leftHeight = height(node.left);
+  // Height of right subtree
+  let rightHeight = height(node.right);
+  // In case left or right subtree is unbalanced
+  if (leftHeight == -1 || rightHeight == -1) {
+    return -1;
+  }
+  // If height difference between left and right is more than 1 (unbalanced)
+  if (Math.abs(leftHeight - rightHeight) > 1) {
+    return -1;
+  }
+  // else, return height
+  return Math.max(leftHeight, rightHeight) + 1;
 }
 
 const arr = [1, 5, 7, 3, 12, 70, 65, 2, 4, 40, 55];
