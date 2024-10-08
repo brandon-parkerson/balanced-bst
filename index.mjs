@@ -184,5 +184,21 @@ function inOrder(root, callback) {
   inOrder(root.right, callback);
 }
 
+function postOrder(root, callback) {
+  if (typeof callback !== "function") {
+    throw new Error("You argument is not a function");
+  }
+  // Base Case
+  if (root === null) {
+    return
+  }
+  // Recursively call left subtree
+  postOrder(root.left, callback);
+  // Recursively call right subtree
+  postOrder(root.right, callback);
+  // Pass root to callback
+  callback(root.data);
+}
+
 const arr = [1, 5, 7, 3, 12, 70, 65, 2, 4, 40, 55];
 buildTree(arr);
